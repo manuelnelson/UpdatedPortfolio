@@ -1,0 +1,148 @@
+@-webkit-keyframes spin{
+    0%{
+        transform: rotateZ(0deg);
+    }
+    100%{
+        transform: rotateZ(360deg);
+    }
+}
+
+.bicycle{
+    $width: 90px;
+    $height: 96px;
+    width: $width;
+    height: $height - ($height / 2.5); //initial height didn't make sense - altered this a bit
+    background-color: transparent;
+    display: inline-block;
+    position: relative;
+    transform: scaleX(-1);
+    $bike-color: #3c3c3c;
+    $wheel-dimension: $height / 3;
+    $frame-thickness: .008 * $height;
+    $wheel-thickness: .012 * $height;
+    $gear-thickness: .008 * $height;
+    .wheel{
+        border: solid $wheel-thickness $bike-color;
+        height: $wheel-dimension;
+        width: $wheel-dimension;
+        border-radius: $wheel-dimension;
+        position: absolute;
+        display: inline-block;
+        bottom: 0;
+        //animation: spin 0.5s 7 linear;
+        &.front{
+            right: 0;
+        }
+        &.back{
+            left: 0;
+        }
+    }
+
+    .spoke{
+        position: absolute;
+        bottom: 0;
+        height: $wheel-dimension;
+        width: 1px;
+        background-color: $bike-color;
+        left: $wheel-dimension / 2;
+        &.first{
+            transform: rotate(25deg);
+        }
+        &.second{
+            transform: rotate(155deg);
+        }
+    }
+    $big-gear-offset: .08 * $height;
+    $gear-dimension: $height / 8;
+    .gear{
+        border: solid $gear-thickness $bike-color;
+        height: $gear-dimension;
+        width: $gear-dimension;
+        border-radius: $gear-dimension;
+        position: absolute;
+        display: inline-block;
+        bottom: ($wheel-dimension / 2) - ($gear-dimension / 2);
+        &.big{
+            left: $wheel-dimension + $big-gear-offset;
+        }
+        &.small{
+            $small-gear-dimension: $gear-dimension / 3;
+            height: $small-gear-dimension;
+            width: $small-gear-dimension;
+            left: ($wheel-dimension / 2) - ($small-gear-dimension/ 2);
+            bottom: ($wheel-dimension / 2) - ($small-gear-dimension / 2);
+        }
+    }
+
+    $bottom-position: $wheel-dimension / 2;
+    $left-position: $wheel-dimension / 2;
+    $right-position: $wheel-dimension + $big-gear-offset + ($gear-dimension / 2);
+    $frame-height: $wheel-dimension / 2 + .12*$height;
+    $frame-thickness: .01 * $height;
+    .bar{
+        position: absolute;
+        background-color:$bike-color;
+    }
+    .bottom.bar{
+        width: $right-position - $left-position;
+        height: $frame-thickness;
+        left: $left-position;
+        bottom: $bottom-position;
+    }
+    $left-angle: 20deg;
+    .left.bar{
+        left: $left-position;
+        bottom: $bottom-position;
+        width: $frame-thickness;
+        height: ($frame-height / sin(90deg - $left-angle));
+        transform: rotate($left-angle);
+        transform-origin: bottom;
+    }
+    $right-angle: 35deg;
+    .middle-left.bar{
+        left: $right-position;
+        bottom: $bottom-position;
+        width: $frame-thickness;
+        height: ($frame-height / sin(90deg - $right-angle));
+        transform: rotate(-1 * $right-angle);
+        transform-origin: bottom;
+    }
+    $top-width: .42*$height;
+    $top-left-position: $left-position + (cos(90deg - $left-angle) * $frame-height);
+    $horiz-width: $top-width - ($right-position - $left-position) - (cos(90deg - $left-angle) * $frame-height);
+    .top.bar{
+        left: $top-left-position;
+        bottom: $wheel-dimension + .12*$height;
+        height: $frame-thickness;
+        width: $top-width;
+    }
+    .middle-right.bar{
+        left: $right-position;
+        bottom: $bottom-position;
+        width: $frame-thickness;
+        height: ($frame-height / sin(90deg - $right-angle));
+        transform: rotate($right-angle);
+        transform-origin: bottom;
+    }
+    .right.bar{
+        right: $wheel-dimension/2;
+        bottom: $bottom-position;
+        width: $frame-thickness;
+        height: .38 * $height;
+        transform: rotate(-1 * 20deg);
+        transform-origin: bottom;
+
+    }
+
+    $seat-width: .12*$height;
+    .seat{
+        position: absolute;
+        display: inline-block;
+        left: $top-left-position - $seat-width / 2;
+        bottom: $wheel-dimension + .12*$height;
+        width: $seat-width;
+        height: $seat-width/30;
+        border: solid ($seat-width/7) $bike-color;
+        border-radius: ($seat-width/7);
+    }
+}

@@ -1,0 +1,23 @@
+<div class="tile-wrapper" [ngClass]="{'show-more':showMore}">
+	<img src="{{work.image.url}}" alt="{{work.name}}"/>
+	<div class="view">
+		<a href="{{work.link}}" target="_blank"><i class="fa fa-eye"></i> View Site</a>
+	</div>
+	<div class="lead-content">
+		<div class="container">
+			<span class="read-more" (click)="readMore()">Read More<i class="icon-enlarge2"></i></span>
+			<span class="close" (click)="close()">Close<i class="icon-cross"></i></span>
+			<h4 class="name">{{work.name}}</h4>
+			<div class="roles">
+				<span *ngFor="let role of work.roles" class="role">{{role.name}}</span>
+			</div>
+			<div class="description">
+				<h4>Features &amp; Technologies</h4>
+				<div [innerHtml]="work.content.extended"></div>
+			</div>
+			<div class="company">
+				<p>Made with company: <span>{{work.company}}</span></p>
+			</div>
+		</div>
+	</div>
+</div>
